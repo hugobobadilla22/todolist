@@ -7,7 +7,7 @@
     <p><strong>Priority: </strong>{{ $todo->priority }}</p>
     <p><strong>Done: </strong>{{ $todo->done == true ? 'YES' : 'NO' }}</p>
     <div>
-        <a href="">Edit</a>
+        <a href="{{ route('todos.edit', $todo->id) }}">Edit</a>
         <form action="{{ route('todos.destroy', $todo->id) }}" method="post">
             @csrf
             @method('DELETE')

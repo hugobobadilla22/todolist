@@ -32,7 +32,7 @@ class TodoController extends Controller
         Todo::create([
             'title' => $request->title,
             'priority' => $request->priority,
-            'done' => $request->done == 'NO' ? false : true
+            'done' => $request->done == '1' ? true : false
         ]);
 
         return redirect()->route('todos.index');
@@ -52,6 +52,7 @@ class TodoController extends Controller
      */
     public function edit(string $id)
     {
+        $todos = Todo::all();
         $todo = Todo::find($id);
         return view('edit', compact('todo'));
     }
@@ -61,7 +62,13 @@ class TodoController extends Controller
      */
     public function update(TodoRequest $request, string $id)
     {
-        //
+        $todo = Todo::find($id);
+        $todo->title = $request->input('title');
+        $todo->priority = $request->priority;
+        $todo->done = $request->done == '1' ? true : false;
+        $todo->save();
+
+        return redirect()->route('todos.index');
     }
 
     /**
